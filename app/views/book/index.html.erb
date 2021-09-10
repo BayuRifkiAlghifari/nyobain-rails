@@ -1,0 +1,74 @@
+<form method="post" id="form" action="/create_book" data-remote="true">
+	<div class="mb-3">
+    	<label for="title" class="form-label">Title</label>
+    	<input type="text" class="form-control" id="title" name="book[title]">
+  	</div>
+  	<div class="mb-3">
+    	<label for="desc" class="form-label">Desc</label>
+    	<input type="text" class="form-control" id="desc" name="book[desc]">
+  	</div>
+  	<div class="mb-3">
+    	<label for="price" class="form-label">Price</label>
+    	<input type="text" class="form-control" id="price" name="book[price]">
+  	</div>
+  	<div class="mb-3">
+    	<label for="author" class="form-label">Author</label>
+    	<input type="text" class="form-control" id="author" name="book[author]">
+  	</div>
+  	<input type="submit" value="save">
+</form>
+
+<table class="table">
+  	<thead>
+    	<tr>
+      		<th scope="col">No</th>
+      		<th scope="col">Title</th>
+      		<th scope="col">Description</th>
+      		<th scope="col">Price</th>
+      		<th scope="col">Author</th>
+    	</tr>
+  	</thead>
+  	<tbody id="data">
+  		<% @number = 0 %>
+  		<% @book.each_with_index do |r, i| %>
+			<% @number += 1 %>
+			<tr data-id="<%= r.id %>">
+				<td><%= i+1 %></td>
+				<td><%= r.title %></td>
+				<td><%= r.desc %></td>
+				<td><%= r.price %></td>
+				<td><%= r.author %></td>
+			</tr>
+		<% end %>
+  	</tbody>
+</table>
+
+<script type="text/javascript">
+	window.addEventListener("load", () => {
+  		const el = document.querySelector("#form")
+  		let number = <%= @number %>
+  		
+  		el.addEventListener("ajax:success", ev => 
+  		{
+    		const [_data, _status, xhr] = ev.detail
+
+			let data = JSON.parse(xhr.responseText)
+
+			$('#data').innerHTML = $('#data').innerHTML + `
+				<tr>
+					<td>${number+1}</td>
+					<td>${data.title}</td>
+					<td>${data.desc}</td>
+					<td>${data.price}</td>
+					<td>${data.author}</td>
+				</tr>
+			`
+			number += 1
+  		})
+  		el.addEventListener("ajax:error", () => 
+  		{
+  			// error
+    		el.insertAdjacentHTML("beforeend", "<p>ERROR</p>")
+  		})
+	})
+</script>
