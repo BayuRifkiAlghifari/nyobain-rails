@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   get 'book' => 'book#index'
-  post 'create_book' => 'book#create'
+  get 'book/ajax_data' => 'book#ajax_data'
+  post 'book/create_book' => 'book#create'
 end

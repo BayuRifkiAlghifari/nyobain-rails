@@ -14,7 +14,7 @@ development:
   database: latihan
   pool: 5
   username: root
-  password:
+  password: 12345678
   socket: /tmp/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -27,7 +27,7 @@ test:
   database: latihan
   pool: 5
   username: root
-  password:
+  password: 12345678
   socket: /tmp/mysql.sock
 
 production:
@@ -37,5 +37,5 @@ production:
   database: latihan
   pool: 5
   username: root
-  password:
+  password: 12345678
   socket: /tmp/mysql.sock

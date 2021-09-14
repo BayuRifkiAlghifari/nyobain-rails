@@ -2,7 +2,12 @@ class BookController < ApplicationController
 	before_action :authenticate_user!
 
 	def index
-		@book = Book.all
+	end
+
+	def ajax_data
+		respond_to do |format|
+			format.json { render json: BookDatatable.new(params) }
+		end
 	end
 
 	def create
