@@ -1,0 +1,110 @@
+function ajax_data()
+{
+	$('#table-ggwp').DataTable({
+		processing: true,
+		serverSide: true,
+		ajax: {
+  			url: '/book/ajax_data'
+		},
+		columns: [
+	      	{data: 'title'},
+	      	{data: 'desc'},
+	      	{data: 'price'},
+	      	{data: 'author'},
+	      	{data: 'id', render(value)
+	      	{
+	      		return `
+	      			<button class="btn btn-primary" onclick="Update(${value})">Update</button>
+	      			<button class="btn btn-danger" onclick="Delete(${value})">Delete</button>
+	      		`
+	      	}},
+		],
+	})
+}
+
+function Create()
+{
+	$('#modal-title').html('Create New <%= @title %>')
+	$('#form').prop('action', '/book/create')
+	$('#_method').val('post')
+	$('#title').val('')
+	$('#desc').val('')
+	$('#price').val('')
+	$('#author').val('')
+}
+
+function Update(id)
+{
+	$('#modal-title').html('Update <%= @title %>')
+	$('#modal').modal('show')
+	$('#form').prop('action', `/book/update/${id}`)
+	$('#_method').val('put')
+
+	$.ajax({
+		method: 'get',
+		url: `/book/find/${id}`,
+		success(data)
+		{
+			$('#title').val(data.title)
+			$('#desc').val(data.desc)
+			$('#price').val(data.price)
+			$('#author').val(data.author)	
+		}
+	})
+}
+
+function Delete(id)
+{
+	let check = confirm('Are you sure ?')
+
+	if(check > 0)
+	{
+		$.ajax({
+			method: 'post',
+			url: `/book/delete/${id}`,
+			data: {
+				_method: 'delete',
+			},
+			success(data)
+			{
+				alert('<%= @title %> Deleted')
+
+				$("#table-ggwp").dataTable().fnDestroy()
+
+				ajax_data()
+			}
+		})
+	}
+}
+
+$(document).ready(() =>
+{
+	ajax_data()
+
+	$('#form').on('ajax:success', ev =>
+	{
+		let _method = $('#_method').val()
+
+		if(_method == 'post')
+		{
+			alert('<%= @title %> Created')
+		}
+		else
+		{
+			alert('<%= @title %> Updated')			
+		}
+
+		$('#modal').modal('hide')
+		$("#table-ggwp").dataTable().fnDestroy()
+
+		ajax_data()
+	})
+
+	$('#form').on('ajax:error', ev =>
+	{
+		$('#modal').modal('hide')
+		$("#table-ggwp").dataTable().fnDestroy()
+
+		ajax_data()
+	})
+})

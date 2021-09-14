@@ -2,7 +2,14 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'home#index'
 
-  get 'book' => 'book#index'
-  get 'book/ajax_data' => 'book#ajax_data'
-  post 'book/create_book' => 'book#create'
+  #Book route
+  scope '/book' do
+    get '/' => 'book#index'
+    get '/find/:id' => 'book#find'
+    get '/ajax_data' => 'book#ajax_data'
+    post '/create' => 'book#create'
+    put '/update/:id' => 'book#update'
+    delete '/delete/:id' => 'book#delete'
+  end
+
 end

@@ -1,70 +1,26 @@
-<form method="post" id="form" action="/book/create_book" data-remote="true">
-	<div class="mb-3">
-    	<label for="title" class="form-label">Title</label>
-    	<input type="text" class="form-control" id="title" name="book[title]">
-  	</div>
-  	<div class="mb-3">
-    	<label for="desc" class="form-label">Desc</label>
-    	<input type="text" class="form-control" id="desc" name="book[desc]">
-  	</div>
-  	<div class="mb-3">
-    	<label for="price" class="form-label">Price</label>
-    	<input type="text" class="form-control" id="price" name="book[price]">
-  	</div>
-  	<div class="mb-3">
-    	<label for="author" class="form-label">Author</label>
-    	<input type="text" class="form-control" id="author" name="book[author]">
-  	</div>
-  	<input type="submit" value="save">
-</form>
-
-<table class="table" id="table-ggwp">
+<div class="text-center">
+	<a class="btn btn-danger" href="/users/sign_out" data-method="delete">Logout</a>
+	<button class="btn btn-success" onclick="Create()" data-toggle="modal" data-target="#modal">Create</button>
+</div>
+<table class="display" id="table-ggwp">
   	<thead>
     	<tr>
-      		<th scope="col">No</th>
       		<th scope="col">Title</th>
       		<th scope="col">Description</th>
       		<th scope="col">Price</th>
       		<th scope="col">Author</th>
+      		<th scope="col">Action</th>
     	</tr>
   	</thead>
 </table>
 
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<%= render "book/form" %>
+  	</div>
+</div>
+
 <script type="text/javascript">
-	function ajax_data()
-	{
-		$('#table-ggwp').DataTable({
-			processing: true,
-    		serverSide: true,
-    		ajax: {
-      			url: '/book/ajax_data'
-    		},
-    		columns: [
-		      	{data: 'id'},
-		      	{data: 'title'},
-		      	{data: 'desc'},
-		      	{data: 'price'},
-		      	{data: 'author'},
-    		],
-		})
-	}
-
-	$(document).ready(() =>
-	{
-		ajax_data()
-
-		$('#form').on('ajax:success', ev =>
-		{
-			$("#table-ggwp").dataTable().fnDestroy()
-
-			ajax_data()
-		})
-
-		$('#form').on('ajax:error', ev =>
-		{
-			$("#table-ggwp").dataTable().fnDestroy()
-
-			ajax_data()
-		})
-	})
+	<%= render "book/js.js" %>
 </script>
