@@ -7,17 +7,17 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :must_have_a_role, on :update
+  validate :must_have_a_role, on: :update
 
   private
-  def assign_default_role
-    self.add_role(:admin) if self.roles.blank?
-  end
-
-  def must_have_a_role
-    unless roles.any?
-      errors.add(:roles, 'Mush have at least 1 role')
+    def assign_default_role
+      self.add_role(:admin) if self.roles.blank?
     end
-  end
+
+    def must_have_a_role
+      unless roles.any?
+        errors.add(:roles, 'Mush have at least 1 role')
+      end
+    end
 
 end

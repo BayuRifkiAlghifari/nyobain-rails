@@ -1,6 +1,4 @@
 class BookController < ApplicationController
-	before_action :authenticate_user!
-
 	def index
 		@title = 'Book'
 	end
@@ -16,7 +14,9 @@ class BookController < ApplicationController
 	def create
 		exe = Book.new(book_params)
 
-		if exe.save
+		authorize exe, :create?
+		
+		if exe.save!
 			render json: exe, status: :created
 		else
 			render json: exe.errors, status: :unproccessable_entity
@@ -25,8 +25,10 @@ class BookController < ApplicationController
 
 	def update
 		exe = Book.find(params[:id])
+		
+		authorize exe, :update?
 
-		if exe.update(book_params)
+		if exe.update!(book_params)
 			render json: exe, status: :ok
 		else
 			render json: exe.errors, status: :unproccessable_entity
@@ -36,7 +38,9 @@ class BookController < ApplicationController
 	def delete
 		exe = Book.find(params[:id])
 
-		if exe.destroy
+		authorize exe, :delete?
+
+		if exe.destroy!
 			render json: exe, status: :ok
 		else
 			render json: exe.errors, status: :unproccessable_entity
