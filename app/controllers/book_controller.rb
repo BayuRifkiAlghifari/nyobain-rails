@@ -12,11 +12,9 @@ class BookController < ApplicationController
 	end
 
 	def create
-		exe = Book.new(book_params)
-
-		authorize exe, :create?
+		exe = store(Book, book_params, true)
 		
-		if exe.save!
+		if exe
 			render json: exe, status: :created
 		else
 			render json: exe.errors, status: :unproccessable_entity
@@ -24,11 +22,9 @@ class BookController < ApplicationController
 	end
 
 	def update
-		exe = Book.find(params[:id])
-		
-		authorize exe, :update?
+		exe = edit(Book, book_params, params[:id], true)
 
-		if exe.update!(book_params)
+		if exe
 			render json: exe, status: :ok
 		else
 			render json: exe.errors, status: :unproccessable_entity
@@ -36,11 +32,9 @@ class BookController < ApplicationController
 	end
 
 	def delete
-		exe = Book.find(params[:id])
+		exe = destroy(Book, params[:id], true)
 
-		authorize exe, :delete?
-
-		if exe.destroy!
+		if exe
 			render json: exe, status: :ok
 		else
 			render json: exe.errors, status: :unproccessable_entity
