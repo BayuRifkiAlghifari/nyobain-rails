@@ -11,7 +11,10 @@ function ajax_data()
 	      	{data: 'desc'},
 	      	{data: 'price'},
 	      	{data: 'author'},
-	      	{data: 'image_data'},
+	      	{data: 'image_data', render(value)
+	      	{
+	      		return `<img src="${value}" width="100%">`
+	      	}},
 	      	{data: 'id', render(value)
 	      	{
 	      		return `
@@ -53,7 +56,15 @@ function Update(id)
 			$('#price').val(data.price)
 			$('#author').val(data.author)			
 			$('#cache').val(data.image_data)
-			$('#img-preview').prop('src', '/uploads/'+JSON.parse(data.image_data).id)
+			$('#img-preview').prop('src', '')
+			if(data.image_data != null)
+			{
+				$('#img-preview').prop('src', `/uploads/${JSON.parse(data.image_data).id}`)			
+			}
+		},
+		error(data)
+		{
+			$('#img-preview').prop('src', data.responseText)
 		}
 	})
 }
