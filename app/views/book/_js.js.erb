@@ -59,7 +59,7 @@ function Update(id)
 			$('#img-preview').prop('src', '')
 			if(data.image_data != null)
 			{
-				$('#img-preview').prop('src', `/uploads/${JSON.parse(data.image_data).id}`)			
+				$('#img-preview').prop('src', `/uploads/${JSON.parse(data.image_data).derivatives.small.id}`)		
 			}
 		},
 		error(data)
