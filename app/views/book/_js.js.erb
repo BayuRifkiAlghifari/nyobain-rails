@@ -11,6 +11,7 @@ function ajax_data()
 	      	{data: 'desc'},
 	      	{data: 'price'},
 	      	{data: 'author'},
+	      	{data: 'image_data'},
 	      	{data: 'id', render(value)
 	      	{
 	      		return `
@@ -31,6 +32,8 @@ function Create()
 	$('#desc').val('')
 	$('#price').val('')
 	$('#author').val('')
+	$('#cache').val('')
+	$('#img-preview').prop('src', '')	
 }
 
 function Update(id)
@@ -48,7 +51,9 @@ function Update(id)
 			$('#title').val(data.title)
 			$('#desc').val(data.desc)
 			$('#price').val(data.price)
-			$('#author').val(data.author)	
+			$('#author').val(data.author)			
+			$('#cache').val(data.image_data)
+			$('#img-preview').prop('src', '/uploads/'+JSON.parse(data.image_data).id)
 		}
 	})
 }
@@ -80,6 +85,11 @@ function Delete(id)
 $(document).ready(() =>
 {
 	ajax_data()
+
+	$('#image').change(function()
+	{
+		readImage(this, 'img-preview')
+	})
 
 	$('#form').on('ajax:success', ev =>
 	{

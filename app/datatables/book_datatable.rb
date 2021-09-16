@@ -8,7 +8,8 @@ class BookDatatable < AjaxDatatablesRails::ActiveRecord
       title: { source: "Book.title", cond: :like },
       desc: { source: "Book.desc", cond: :like },
       price: { source: "Book.price", cond: :like },
-      author: { source: "Book.author", cond: :like }
+      author: { source: "Book.author", cond: :like },
+      image_data: { source: "Book.image_url", cond: :like },
     }
   end
 
@@ -21,6 +22,7 @@ class BookDatatable < AjaxDatatablesRails::ActiveRecord
         desc: record.desc,
         price: record.price,
         author: record.author,
+        image_data: record.image_url,
       }
     end
   end
