@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  # Sidekiq
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+  
   devise_for :users
   root to: 'home#index'
 
@@ -15,4 +19,6 @@ Rails.application.routes.draw do
   #Send mail
   get '/send_mail' => 'book#send_mail'
 
+  # Test Sidekiq
+  get '/test_side_kiq' => 'book#test_side_kiq'
 end

@@ -46,6 +46,11 @@ class BookController < ApplicationController
 		render json: BookMailer.ok.deliver_now
 	end
 
+	def test_side_kiq
+		# BookWorker.perform_async("07-01-2021", "08-01-2021")
+		BookWorker.perform_in(1.minutes, 'bob', 5)
+	end
+
 	private
 	def book_params
 		params.require(:data).permit(:title, :desc, :price, :author, :image)
