@@ -12,4 +12,7 @@ Rails.application.routes.draw do
     delete '/delete/:id' => 'book#delete'
   end
 
+  #Send mail
+  get '/send_mail' => 'book#send_mail'
+
 end

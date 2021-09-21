@@ -1,4 +1,5 @@
 class BookController < ApplicationController
+	
 	def index
 		@title = 'Book'
 	end
@@ -41,6 +42,11 @@ class BookController < ApplicationController
 		end
 	end
 
+	def send_mail
+		render json: BookMailer.ok.deliver_now
+	end
+
+	private
 	def book_params
 		params.require(:data).permit(:title, :desc, :price, :author, :image)
 	end
