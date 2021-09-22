@@ -63,3 +63,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "sidekiq", "~> 6.2"
 gem 'sinatra', github: 'sinatra/sinatra'
+gem 'jsonapi.rb'
