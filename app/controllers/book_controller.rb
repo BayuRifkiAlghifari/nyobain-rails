@@ -2,6 +2,7 @@ class BookController < ApplicationController
 	
 	def index
 		@title = 'Book'
+		@ggwp = Book.ransack(params[:q]).result.to_sql
 	end
 
 	def find
@@ -49,6 +50,9 @@ class BookController < ApplicationController
 	def test_side_kiq
 		# BookWorker.perform_async("07-01-2021", "08-01-2021")
 		BookWorker.perform_in(1.minutes, 'bob', 5)
+	end
+
+	def test_ransack
 	end
 
 	private

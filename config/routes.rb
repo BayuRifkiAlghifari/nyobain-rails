@@ -21,4 +21,7 @@ Rails.application.routes.draw do
 
   # Test Sidekiq
   get '/test_side_kiq' => 'book#test_side_kiq'
+
+  # Test rasack
+  get '/test_ransack' => 'book#test_ransack'
 end

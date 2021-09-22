@@ -3,6 +3,7 @@
 	<button class="btn btn-success" onclick="Create()" data-toggle="modal" data-target="#modal">Create</button>
 	<a class="btn btn-primary" href="/send_mail" data-remote="true">Send Mail</a>
 	<a class="btn btn-primary" href="/test_side_kiq" data-remote="true">Sidekiq</a>
+	<a class="btn btn-success" href="/test_ransack">Test Ransack</a>
 </div>
 <table class="display" id="table-ggwp">
   	<thead>
@@ -17,6 +18,7 @@
   	</thead>
 </table>
 
+<%== @ggwp %>
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
