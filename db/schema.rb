@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_16_022045) do
+ActiveRecord::Schema.define(version: 2021_09_23_050926) do
 
   create_table "books", charset: "utf8mb3", force: :cascade do |t|
     t.string "title"
@@ -22,6 +22,28 @@ ActiveRecord::Schema.define(version: 2021_09_16_022045) do
     t.text "image_data"
   end
 
+  create_table "messages", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "sender_id"
+    t.bigint "receiver_id"
+    t.bigint "room_id"
+    t.text "message"
+    t.text "attachment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["receiver_id"], name: "index_messages_on_receiver_id"
+    t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
+  end
+
+  create_table "participants", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "room_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_participants_on_room_id"
+    t.index ["user_id"], name: "index_participants_on_user_id"
+  end
+
   create_table "roles", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
@@ -31,6 +53,13 @@ ActiveRecord::Schema.define(version: 2021_09_16_022045) do
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
     t.index ["name"], name: "index_roles_on_name"
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
+  end
+
+  create_table "rooms", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name"
+    t.string "tipe"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", charset: "utf8mb3", force: :cascade do |t|

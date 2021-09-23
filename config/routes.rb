@@ -27,4 +27,13 @@ Rails.application.routes.draw do
 
   # Get jsonapi.rb
   get '/jsonapi.rb' => 'book#jsonapi'
+
+  #Chat
+  scope '/chat' do
+    get '/' => 'chat#index'
+    get '/detail/:room/:receiver' => 'chat#index'
+    get '/get_user' => 'chat#get_user'
+    get '/get_chat' => 'chat#get_chat'
+    post '/send_message' => 'chat#send_message'
+  end
 end

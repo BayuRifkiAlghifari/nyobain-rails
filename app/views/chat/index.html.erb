@@ -1,0 +1,43 @@
+<link rel="stylesheet"  href="/chat.css">
+<div class="container">
+    <h3 class=" text-center"><%= @title %></h3>
+    <div class="messaging">
+        <div class="inbox_msg">
+            <div class="inbox_people">
+                <div class="headind_srch">
+                    <div class="recent_heading">
+                        <h4>Recent</h4>
+                    </div>
+                    <div class="srch_bar">
+                        <div class="stylish-input-group">
+                            <input type="text" class="search-bar"  placeholder="Search" >
+                            <span class="input-group-addon">
+                                <button type="button"> 
+                                    <i class="fa fa-search" aria-hidden="true"></i> 
+                                </button>
+                            </span> 
+                        </div>
+                    </div>
+                </div>
+                <div class="inbox_chat" id="inbox_chat">
+                </div>
+            </div>
+            <div class="mesgs">
+                <div class="msg_history" id="coservation">
+                </div>
+                <div class="type_msg">
+                    <div class="input_msg_write">
+                        <form id="form-chat" method="post" action="/chat/send_message" data-remote="true" enctype="multipart/form-data">
+                            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                            <input name="data[sender_id]" type="hidden" value="<%= current_user.id %>" id="chat-user-id">
+                            <input name="data[receiver_id]" type="hidden" value="<%= @receiver_id %>" id="chat-receiver-id">
+                            <input name="data[room_id]" id="room-chat" type="hidden"  value="<%= @room_id %>" data-value="<%= @room_id %>">
+                            <input autocomplete="off" type="text" id="data-message" name="data[message]" class="write_msg" placeholder="Type a message" />
+                            <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

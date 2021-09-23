@@ -18,7 +18,7 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body data-url="<%= request.path.split('/')[1] %>">
     <% if notice %>
       <p class="alert alert-success"><%= notice %></p>
     <% end %>
