@@ -54,6 +54,10 @@ class BookController < ApplicationController
 
 	def test_ransack
 	end
+	
+	def jsonapi
+		render jsonapi: Book.all
+	end
 
 	private
 	def book_params

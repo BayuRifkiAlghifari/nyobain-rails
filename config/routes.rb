@@ -24,4 +24,7 @@ Rails.application.routes.draw do
 
   # Test rasack
   get '/test_ransack' => 'book#test_ransack'
+
+  # Get jsonapi.rb
+  get '/jsonapi.rb' => 'book#jsonapi'
 end
