@@ -117,19 +117,23 @@ function get_chat(data)
     $(`#user-${r.id}`).on('ajax:success', ev =>
     {
       let [_data] = ev.detail
-
+      
+      $('#chat-receiver-id').val(r.id)
       window.history.pushState({}, '', `/chat/detail/${_data.room.id}/${r.id}`)
       $('#room-chat').attr('data-value', _data.room.id)
       $('#room-chat').val(_data.room.id)
       $('#room-chat').change()
-      $('#chat-receiver-id').val(r.id)
-      render_chat(_data.chat)
+      if(_data.chat.length > 0)
+      {
+        render_chat(_data.chat)
+      }
     })
   })
 }
 
 function render_chat(data)
 {
+  $('#coservation').html('')
   let html = ''
   if(data.length > 0)
   {
@@ -159,25 +163,27 @@ function render_chat(data)
   }
   else
   {
-    html += `${
-      data.sender_id == $('#chat-user-id').val() 
-      ? `<div class="outgoing_msg">
-          <div class="sent_msg">
-            <p>
-              ${data.message}
-            </p>
-          </div>
-        </div>`
-      : `<div class="received_msg">
-          <div class="received_withd_msg">
-            <p>
-              ${data.message}
-            </p>
-          </div>
-        </div>`
-    }`
-
-    $('#coservation').append(html)
+    if(data.sender_id > 0)
+    {
+      html += `${
+        data.sender_id == $('#chat-user-id').val() 
+        ? `<div class="outgoing_msg">
+            <div class="sent_msg">
+              <p>
+                ${data.message}
+              </p>
+            </div>
+          </div>`
+        : `<div class="received_msg">
+            <div class="received_withd_msg">
+              <p>
+                ${data.message}
+              </p>
+            </div>
+          </div>`
+      }`
+      $('#coservation').append(html)
+    }
   }
   let elem        = document.getElementById('coservation')
   elem.scrollTop  = elem.scrollHeight
