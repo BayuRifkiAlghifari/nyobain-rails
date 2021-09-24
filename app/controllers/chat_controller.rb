@@ -39,7 +39,7 @@ class ChatController < ApplicationController
 		end
 
 		# Get chat
-		@chat = Message.joins(:sender, :receiver, :room).where(room_id: @room.id)
+		@chat = Message.joins(:sender, :receiver, :room).where(room_id: @room.id).order('id ASC')
 		
 		render json: {chat: @chat, room: @room} 
 	end

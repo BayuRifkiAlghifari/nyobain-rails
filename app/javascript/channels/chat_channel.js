@@ -13,6 +13,11 @@ document.addEventListener('turbolinks:load', () =>
     let user_id = $('#chat-user-id').val()
     let receiver_id = $('#chat-receiver-id').val()
     
+    if(receiver_id == '')
+    {
+      $('#form-chat').css('display', 'none')
+    }
+
     let channel = consumer.subscriptions.create({channel: "ChatChannel", room_id: room}, {
       connected() {
         // Get message
@@ -116,6 +121,8 @@ function get_chat(data)
   {
     $(`#user-${r.id}`).on('ajax:success', ev =>
     {
+      $('#coservation').html('')
+      $('#form-chat').css('display', 'block')
       let [_data] = ev.detail
       
       $('#chat-receiver-id').val(r.id)
@@ -133,7 +140,6 @@ function get_chat(data)
 
 function render_chat(data)
 {
-  $('#coservation').html('')
   let html = ''
   if(data.length > 0)
   {
