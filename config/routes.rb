@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   # Test rasack
   get '/test_ransack' => 'book#test_ransack'
 
+  # Chart Kick
+  get '/cart_kick' => 'book#cart_kick'
+
   # Get jsonapi.rb
   get '/jsonapi.rb' => 'book#jsonapi'
 
@@ -36,4 +39,7 @@ Rails.application.routes.draw do
     get '/get_chat' => 'chat#get_chat'
     post '/send_message' => 'chat#send_message'
   end
+
+  # Test Faraday
+  get '/test_faraday' => 'book#test_faraday'
 end

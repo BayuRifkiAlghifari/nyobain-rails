@@ -1,5 +1,7 @@
 class BookController < ApplicationController
 	
+	require 'faraday'
+
 	def index
 		@title = 'Book'
 		@ggwp = Book.ransack(params[:q]).result.to_sql
@@ -57,6 +59,12 @@ class BookController < ApplicationController
 	
 	def jsonapi
 		render jsonapi: Book.all
+	end
+
+	def test_faraday
+		req = Faraday.get 'http://httpbingo.org'
+
+		render json: req
 	end
 
 	private
